@@ -1,0 +1,38 @@
+{
+  "canisters": {
+    "internet_identity": {
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai",
+      "frontend": {}
+    },
+    "nft": {
+      "dependencies": ["nftminter"],
+      "type": "motoko",
+      "main": "./src/nft/Main.mo"
+    },
+    "nftminter": {
+      "type": "custom",
+      "main": "src/nftminter/nftminter.ts",
+      "candid": "src/nftminter/nftminter.did",
+      "build": "npx azle nftminter",
+      "wasm": ".azle/nftminter/nftminter.wasm",
+      "gzip": true,
+      "env": ["CANISTER_ID_NFT"],
+      "post_install": ["dfx generate"]
+    },
+    "app": {
+      "type": "assets",
+      "build": "yarn build",
+      "source": ["src/bare_frontend/dist"],
+      "frontend": {}
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

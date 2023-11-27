@@ -1,0 +1,13 @@
+default:
+  image: node:16.20.0
+
+deploy:
+  stage: deploy
+  variables:
+    NODE_OPTIONS: --max_old_space_size=3584
+    DFX_NETWORK: ic
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
